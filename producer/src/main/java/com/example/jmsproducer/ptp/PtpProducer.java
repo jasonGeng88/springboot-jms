@@ -3,7 +3,6 @@ package com.example.jmsproducer.ptp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 点对点模式 - 生产者
@@ -21,12 +20,11 @@ public class PtpProducer {
     private JmsTemplate jmsQueueTemplate;
 
 
-    @Transactional
     public void send(){
         jmsQueueTemplate.send(QUEUE_NAME, session -> {
             return session.createTextMessage("我是原始消息");
         });
-        throw new RuntimeException();
+//        throw new RuntimeException();
     }
 
     public void convertAndSend(){

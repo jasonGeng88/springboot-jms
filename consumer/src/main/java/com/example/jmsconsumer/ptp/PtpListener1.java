@@ -14,6 +14,6 @@ public class PtpListener1 {
     public void receive(String msg){
         System.out.println("点对点模式1: " + msg);
         //抛出异常后,消息不会被消费成功,将会进行重试,达到次数后,进入死信队列
-        throw new RuntimeException();
+//        throw new RuntimeException();
     }
 }

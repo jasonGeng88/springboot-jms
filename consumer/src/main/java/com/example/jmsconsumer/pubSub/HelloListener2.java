@@ -13,5 +13,6 @@ public class HelloListener2 {
     @JmsListener(destination = "pubSub", containerFactory = "jmsTopicListenerContainerFactory")
     public void receive(String msg){
         System.out.println("订阅者2 - " + msg);
+//        throw new RuntimeException();
     }
 }
