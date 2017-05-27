@@ -6,7 +6,7 @@ import org.apache.activemq.ActiveMQXAConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.jta.atomikos.AtomikosXAConnectionFactoryWrapper;
+import org.springframework.boot.jta.atomikos.AtomikosConnectionFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.core.JmsTemplate;
@@ -44,8 +44,10 @@ public class XaApplication {
 
     public ConnectionFactory connectionFactory(){
 
-        AtomikosXAConnectionFactoryWrapper wrapper = new AtomikosXAConnectionFactoryWrapper();
-        return wrapper.wrapConnectionFactory(xaFactory());
+        AtomikosConnectionFactoryBean bean = new AtomikosConnectionFactoryBean();
+        bean.setUniqueResourceName("xa");
+        bean.setXaConnectionFactory(xaFactory());
+        return bean;
     }
 
     @Bean
