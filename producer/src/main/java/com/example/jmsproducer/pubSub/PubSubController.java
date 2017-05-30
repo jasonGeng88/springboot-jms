@@ -1,5 +1,6 @@
 package com.example.jmsproducer.pubSub;
 
+import com.example.jmsproducer.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,20 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/pubSub")
 public class PubSubController {
 
-    private static final String SUCCESS = "success";
-
     @Autowired
     private PubSubProducer pubSubProducer;
 
     @RequestMapping(value = "/send")
     public String send(){
         pubSubProducer.send();
-        return SUCCESS;
+        return Constant.RESPONSE_SUCCESS;
     }
 
     @RequestMapping(value = "/convertAndSend")
     public String convertAndSend(){
         pubSubProducer.convertAndSend();
-        return SUCCESS;
+        return Constant.RESPONSE_SUCCESS;
     }
 }

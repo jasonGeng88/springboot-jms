@@ -12,7 +12,7 @@ import org.springframework.jms.core.JmsTemplate;
 import javax.jms.ConnectionFactory;
 
 /**
- * MQ 生产者 - 点对点模式
+ * MQ 生产者
  * Created by jason-geng on 5/21/17.
  */
 @SpringBootApplication
@@ -28,12 +28,12 @@ public class Application {
     @Value("${jms.password}")
     private String jmsPassword;
 
-//    @Autowired
-//    private AtomikosJtaConfiguration jtaConfiguration ;
-
+    /**
+     * 创建 ActiveMQ 的连接工厂
+     */
     @Bean
     public ConnectionFactory connectionFactory(){
-        //支持XA
+//        BaseConstant
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
         connectionFactory.setBrokerURL(jmsBrokerUrl);
         connectionFactory.setUserName(jmsUser);
@@ -41,10 +41,12 @@ public class Application {
         return connectionFactory;
     }
 
+    /**
+     * JMS 队列的模板类
+     */
     @Bean
     public JmsTemplate jmsQueueTemplate(){
-        JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory());
-        return jmsTemplate;
+        return new JmsTemplate(connectionFactory());
     }
 
     @Bean
@@ -55,12 +57,10 @@ public class Application {
     }
 
     /**
-     * 分布式事务
+     * 本地事务
      */
     @Bean
     public JmsTransactionManager jmsTransactionManager(){
-//        JtaTransactionManager transactionManager = new JtaTransactionManager();
-//        new UserTransactionAdapter();
         return new JmsTransactionManager(connectionFactory());
     }
 

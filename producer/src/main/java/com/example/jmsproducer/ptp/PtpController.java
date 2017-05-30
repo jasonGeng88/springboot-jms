@@ -1,5 +1,6 @@
 package com.example.jmsproducer.ptp;
 
+import com.example.jmsproducer.Constant;
 import com.example.jmsproducer.mapper.CityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,13 +24,13 @@ public class PtpController {
     @RequestMapping(value = "/send")
     public Object send(){
         ptpProducer.send();
-        return "success";
+        return Constant.RESPONSE_SUCCESS;
     }
 
     @RequestMapping(value = "/convertAndSend")
     public Object convertAndSend(){
         ptpProducer.convertAndSend();
-        return "success";
+        return Constant.RESPONSE_SUCCESS;
     }
 
     @RequestMapping(value = "/multiDataSend")

@@ -1,5 +1,6 @@
 package com.example.jmsproducer.ptp;
 
+import com.example.jmsproducer.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
@@ -14,20 +15,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class PtpProducer {
 
-    private static final String QUEUE_NAME = "ptp";
-
     @Autowired
     private JmsTemplate jmsQueueTemplate;
 
-
+    /**
+     * 发送原始消息 Message
+     */
     public void send(){
-        jmsQueueTemplate.send(QUEUE_NAME, session -> {
+        jmsQueueTemplate.send(Constant.QUEUE_NAME, session -> {
             return session.createTextMessage("我是原始消息");
         });
 //        throw new RuntimeException();
     }
 
+    /**
+     * 发送消息自动转换成原始消息
+     */
     public void convertAndSend(){
-        jmsQueueTemplate.convertAndSend(QUEUE_NAME, "我是自动转换的消息");
+        jmsQueueTemplate.convertAndSend(Constant.QUEUE_NAME, "我是自动转换的消息");
     }
 }

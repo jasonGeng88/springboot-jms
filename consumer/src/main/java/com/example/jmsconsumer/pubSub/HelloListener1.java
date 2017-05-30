@@ -1,5 +1,6 @@
 package com.example.jmsconsumer.pubSub;
 
+import com.example.jmsconsumer.Constant;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class HelloListener1 {
 
-    @JmsListener(destination = "pubSub", containerFactory = "jmsTopicListenerContainerFactory")
+    @JmsListener(destination = Constant.TOPIC_NAME, containerFactory = Constant.TOPIC_CONTAINER)
     public void receive(String msg){
         System.out.println("订阅者1 - " + msg);
     }

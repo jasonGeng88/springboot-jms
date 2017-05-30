@@ -1,5 +1,6 @@
 package com.example.jmsproducer.pubSub;
 
+import com.example.jmsproducer.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
@@ -14,20 +15,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class PubSubProducer {
 
-    private static final String QUEUE_NAME = "pubSub";
-
-
     @Autowired
     private JmsTemplate jmsTopicTemplate;
 
 
     public void send(){
-        jmsTopicTemplate.send(QUEUE_NAME, session -> {
+        jmsTopicTemplate.send(Constant.TOPIC_NAME, session -> {
             return session.createTextMessage("我是原始消息");
         });
     }
 
     public void convertAndSend(){
-        jmsTopicTemplate.convertAndSend(QUEUE_NAME, "我是自动转换的消息");
+        jmsTopicTemplate.convertAndSend(Constant.TOPIC_NAME, "我是自动转换的消息");
     }
 }

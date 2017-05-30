@@ -28,6 +28,9 @@ public class Application {
     @Value("${jms.password}")
     private String jmsPassword;
 
+    /**
+     * 创建 ActiveMQ 的连接工厂
+     */
     @Bean
     public ConnectionFactory connectionFactory(){
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
@@ -37,21 +40,22 @@ public class Application {
         return connectionFactory;
     }
 
-    @Bean
+    /**
+     * JMS 队列的监听容器工厂
+     */
+    @Bean(name = Constant.QUEUE_CONTAINER)
     public DefaultJmsListenerContainerFactory jmsQueueListenerContainerFactory() {
         DefaultJmsListenerContainerFactory factory =
                 new DefaultJmsListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory());
+        //设置连接数
         factory.setConcurrency("3-10");
-        //本地事务
-//        factory.setSessionTransacted(true);
-        factory.setTransactionManager(jmsTransactionManager());
         //重连间隔时间
         factory.setRecoveryInterval(1000L);
         return factory;
     }
 
-    @Bean
+    @Bean(name = Constant.TOPIC_CONTAINER)
     public DefaultJmsListenerContainerFactory jmsTopicListenerContainerFactory() {
         DefaultJmsListenerContainerFactory factory =
                 new DefaultJmsListenerContainerFactory();
